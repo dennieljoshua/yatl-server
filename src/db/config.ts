@@ -6,12 +6,15 @@ if (process.env.NODE_ENV === 'production') {
 	if (!process.env.DATABASE_URL) {
 		throw new Error('Missing Heroku Postgress Environment Variable');
 	}
-	sequelize = new Sequelize({
+	sequelize = new Sequelize(process.env.DATABASE_URL, {
 		dialect: 'postgres',
 		protocol: 'postgres',
-		database: process.env.DATABASE_URL,
-		logging: false,
-		dialectOptions: { ssl: true },
+		dialectOptions: {
+			ssl: {
+				require: true,
+				rejectUnauthorized: false,
+			},
+		},
 	});
 } else {
 	sequelize = new Sequelize({
