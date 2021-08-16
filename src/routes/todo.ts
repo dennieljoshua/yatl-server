@@ -36,7 +36,7 @@ TodoRouter.post('/', async function createTodo(req: Request, res: Response) {
 });
 
 TodoRouter.put('/:id', async function updateTodo(req: Request, res: Response) {
-	const result = await Todo.update(
+	await Todo.update(
 		{
 			isDone: req.body.isDone,
 			name: req.body.name,
@@ -48,7 +48,36 @@ TodoRouter.put('/:id', async function updateTodo(req: Request, res: Response) {
 		}
 	);
 
-	res.send(result);
+	res.send({
+		id: req.params.id,
+		name: req.body.name,
+		isDone: req.body.isDone,
+	});
 });
+
+TodoRouter.delete(
+	'/:id',
+	async function deleteTodo(req: Request, res: Response) {
+		const { id } = req.params;
+
+		const todo = await Todo.findOne({
+			where: {
+				id,
+			},
+		});
+
+		if (!todo) {
+			return res.sendStatus(404);
+		}
+
+		await Todo.destroy({
+			where: {
+				id: todo.id,
+			},
+		});
+
+		res.send(todo);
+	}
+);
 
 export default TodoRouter;
