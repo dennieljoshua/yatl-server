@@ -22,5 +22,8 @@
 	},
 	"scripts": {
 		"start": "nodemon -r dotenv/config index.ts"
+	},
+	"engines": {
+		"node": "14.x"
 	}
 }
