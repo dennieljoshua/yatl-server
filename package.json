@@ -21,7 +21,9 @@
 		"ts-node": "^10.2.0"
 	},
 	"scripts": {
-		"start": "nodemon -r dotenv/config index.ts"
+		"start": "nodemon -r dotenv/config index.ts",
+		"build": "tsc",
+		"postinstall": "tsc"
 	},
 	"engines": {
 		"node": "14.x"
