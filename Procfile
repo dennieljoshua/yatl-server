@@ -1,1 +1,1 @@
-web: node build/index.js
+web: node -r dotenv/config build/index.js
