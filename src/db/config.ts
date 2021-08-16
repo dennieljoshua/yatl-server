@@ -11,12 +11,19 @@ if (process.env.NODE_ENV === 'production') {
 	}
 	const config = parse(process.env.DATABASE_URL);
 	console.log(config);
-	sequelize = new Sequelize({
+	// sequelize = new Sequelize({
+	// 	dialect: 'postgres',
+	// 	username: config.user!,
+	// 	password: config.password!,
+	// 	database: config.database!,
+	// 	host: config.host!,
+	// });
+	sequelize = new Sequelize(process.env.DATABASE_URL, {
 		dialect: 'postgres',
-		username: config.user!,
-		password: config.password!,
-		database: config.database!,
-		host: config.host!,
+		protocol: 'postgres',
+		dialectOptions: {
+			ssl: true,
+		},
 	});
 } else {
 	sequelize = new Sequelize({
