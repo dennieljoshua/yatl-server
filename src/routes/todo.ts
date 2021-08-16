@@ -36,7 +36,7 @@ TodoRouter.post('/', async function createTodo(req: Request, res: Response) {
 });
 
 TodoRouter.put('/:id', async function updateTodo(req: Request, res: Response) {
-	await Todo.update(
+	const [, todos] = await Todo.update(
 		{
 			isDone: req.body.isDone,
 			name: req.body.name,
@@ -45,14 +45,11 @@ TodoRouter.put('/:id', async function updateTodo(req: Request, res: Response) {
 			where: {
 				id: req.params.id,
 			},
+			returning: true,
 		}
 	);
 
-	res.send({
-		id: req.params.id,
-		name: req.body.name,
-		isDone: req.body.isDone,
-	});
+	res.send(todos.find((todo) => todo.id === +req.params.id));
 });
 
 TodoRouter.delete(
