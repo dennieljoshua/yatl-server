@@ -2,7 +2,7 @@
 
 This is the server for yatl project.
 
-### Development Setuo
+### Development Setup
 
 1. Clone this repo
 2. Rename `.env-example` and fill it in with your credentails
